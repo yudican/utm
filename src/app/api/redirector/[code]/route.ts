@@ -14,15 +14,15 @@ export async function GET(
 
   try {
     // Validate short code format
-    if (!code || !/^[a-zA-Z0-9]+$/.test(code)) {
-      return NextResponse.json(
-        {
-          status: 'error',
-          message: 'Format kode URL tidak valid'
-        },
-        { status: 400 }
-      )
-    }
+    // if (!code || !/^[a-zA-Z0-9]+$/.test(code)) {
+    //   return NextResponse.json(
+    //     {
+    //       status: 'error',
+    //       message: 'Format kode URL tidak valid'
+    //     },
+    //     { status: 400 }
+    //   )
+    // }
 
     // For testing purposes, return a mock response
     // In production, you would fetch from your database
