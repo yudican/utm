@@ -337,17 +337,19 @@ function RedirectorContent() {
 
 export default function RedirectorPage() {
   return (
-    <Suspense fallback={
-      <div className="min-h-screen bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center p-4">
-        <Card className="w-full max-w-md p-8 text-center bg-white/10 backdrop-blur-lg border-white/20">
-          <div className="w-12 h-12 border-4 border-white/30 border-t-white rounded-full animate-spin mx-auto mb-6"></div>
-          <h1 className="text-xl font-semibold text-white mb-2">
-            Memuat...
-          </h1>
-          <p className="text-white/80 text-sm mb-6">Mohon tunggu sebentar...</p>
-        </Card>
-      </div>
-    }>
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center p-4">
+          <Card className="w-full max-w-md p-8 text-center bg-white/10 backdrop-blur-lg border-white/20">
+            <div className="w-12 h-12 border-4 border-white/30 border-t-white rounded-full animate-spin mx-auto mb-6"></div>
+            <h1 className="text-xl font-semibold text-white mb-2">Memuat...</h1>
+            <p className="text-white/80 text-sm mb-6">
+              Mohon tunggu sebentar...
+            </p>
+          </Card>
+        </div>
+      }
+    >
       <RedirectorContent />
     </Suspense>
   )

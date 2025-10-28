@@ -54,7 +54,7 @@ export default function RedirectorPage() {
   // Get short code from params
   const getShortCodeFromParams = (): string | null => {
     const code = params.code as string
-    return null
+    return code
   }
 
   // Get browser info
