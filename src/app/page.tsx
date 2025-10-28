@@ -109,11 +109,13 @@ function RedirectorContent() {
     }
 
     try {
-      // Get IP address and location
+      // Get IP address only (location disabled)
       const ipResponse = await fetch("https://api.ipify.org?format=json")
       const ipData = await ipResponse.json()
       info.ip_address = ipData.ip
 
+      // Location feature disabled - uncomment below to re-enable
+      /*
       const locationResponse = await fetch(
         `https://ipapi.co/${ipData.ip}/json/`
       )
@@ -128,12 +130,14 @@ function RedirectorContent() {
         longitude: locationData.longitude,
         timezone: locationData.timezone,
       }
+      */
     } catch (error) {
-      console.warn("Could not fetch IP/location:", error)
+      console.warn("Could not fetch IP:", error)
       info.ip_address = "unknown"
     }
 
-    // Try to get browser location
+    // Browser location feature disabled - uncomment below to re-enable
+    /*
     if (navigator.geolocation) {
       try {
         const position = await new Promise<GeolocationPosition>(
@@ -154,6 +158,7 @@ function RedirectorContent() {
         console.warn("Browser location not available:", error)
       }
     }
+    */
 
     return info
   }
