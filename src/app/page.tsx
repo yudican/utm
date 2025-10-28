@@ -40,7 +40,7 @@ interface URLData {
   message?: string
 }
 
-export default function RedirectorPage() {
+function RedirectorContent() {
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [progress, setProgress] = useState(0)
@@ -294,43 +294,61 @@ export default function RedirectorPage() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center p-4">
-        <Card className="w-full max-w-md p-8 text-center bg-white/10 backdrop-blur-lg border-white/20">
-          <div className="text-6xl mb-4">⚠️</div>
-          <h1 className="text-xl font-semibold text-white mb-2">
-            Terjadi Kesalahan
-          </h1>
-          <Alert className="mb-6 bg-red-500/20 border-red-500/30">
-            <AlertDescription className="text-white/90">
-              {error}
-            </AlertDescription>
-          </Alert>
-          <Button
-            onClick={handleRetry}
-            className="bg-white/20 hover:bg-white/30 text-white border-white/30"
-          >
-            Coba Lagi
-          </Button>
-        </Card>
-      </div>
+      <Suspense fallback={<div></div>}>
+        <div className="min-h-screen bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center p-4">
+          <Card className="w-full max-w-md p-8 text-center bg-white/10 backdrop-blur-lg border-white/20">
+            <div className="text-6xl mb-4">⚠️</div>
+            <h1 className="text-xl font-semibold text-white mb-2">
+              Terjadi Kesalahan
+            </h1>
+            <Alert className="mb-6 bg-red-500/20 border-red-500/30">
+              <AlertDescription className="text-white/90">
+                {error}
+              </AlertDescription>
+            </Alert>
+            <Button
+              onClick={handleRetry}
+              className="bg-white/20 hover:bg-white/30 text-white border-white/30"
+            >
+              Coba Lagi
+            </Button>
+          </Card>
+        </div>
+      </Suspense>
     )
   }
 
   return (
-    <Suspense fallback={null}>
+    <div className="min-h-screen bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center p-4">
+      <Card className="w-full max-w-md p-8 text-center bg-white/10 backdrop-blur-lg border-white/20">
+        <div className="w-12 h-12 border-4 border-white/30 border-t-white rounded-full animate-spin mx-auto mb-6"></div>
+        <h1 className="text-xl font-semibold text-white mb-2">
+          Memproses Permintaan
+        </h1>
+        <p className="text-white/80 text-sm mb-6">Mohon tunggu sebentar...</p>
+        <Progress value={progress} className="mb-4" />
+        <p className="text-white/70 text-xs">
+          Mengumpulkan informasi dan mempersiapkan redirect
+        </p>
+      </Card>
+    </div>
+  )
+}
+
+export default function RedirectorPage() {
+  return (
+    <Suspense fallback={
       <div className="min-h-screen bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center p-4">
         <Card className="w-full max-w-md p-8 text-center bg-white/10 backdrop-blur-lg border-white/20">
           <div className="w-12 h-12 border-4 border-white/30 border-t-white rounded-full animate-spin mx-auto mb-6"></div>
           <h1 className="text-xl font-semibold text-white mb-2">
-            Memproses Permintaan
+            Memuat...
           </h1>
           <p className="text-white/80 text-sm mb-6">Mohon tunggu sebentar...</p>
-          <Progress value={progress} className="mb-4" />
-          <p className="text-white/70 text-xs">
-            Mengumpulkan informasi dan mempersiapkan redirect
-          </p>
         </Card>
       </div>
+    }>
+      <RedirectorContent />
     </Suspense>
   )
 }
