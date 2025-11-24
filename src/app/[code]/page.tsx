@@ -74,7 +74,6 @@ export default function RedirectorPage() {
   // Get IP address and location
   const getIPAndLocation = async () => {
     try {
-      // Get IP address and location from ipapi.co
       const response = await fetch("https://ipapi.co/json/")
       const data = await response.json()
 
