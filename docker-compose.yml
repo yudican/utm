@@ -2,12 +2,8 @@ version: '3.9'
 services:
   nextjs-app:
     build: .
-    container_name: nextjs-dev
+    container_name: nextjs-prod
     ports:
       - "3000:3000"
-    volumes:
-      - .:/app
-      - /app/node_modules
     environment:
-      - NODE_ENV=development
-    command: yarn dev
+      - NODE_ENV=production
