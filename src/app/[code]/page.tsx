@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { useParams } from "next/navigation"
+import Script from "next/script"
 import { Card } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 import { Button } from "@/components/ui/button"
@@ -261,12 +262,83 @@ export default function RedirectorPage() {
 
   if (error) {
     return (
+      <>
+        {/* Google tag (gtag.js) */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=AW-997723858"
+          strategy="afterInteractive"
+        />
+        <Script id="gtag-init" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'AW-997723858');
+          `}
+        </Script>
+
+        <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
+          <Card className="w-full max-w-md p-8 text-center">
+            <div className="mb-6">
+              <div className="w-16 h-16 mx-auto mb-4 bg-red-100 rounded-full flex items-center justify-center">
+                <svg
+                  className="w-8 h-8 text-red-600"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"
+                  />
+                </svg>
+              </div>
+              <h1 className="text-2xl font-bold text-gray-900 mb-2">
+                Oops! Terjadi Kesalahan
+              </h1>
+              <Alert className="mb-4">
+                <AlertDescription>{error}</AlertDescription>
+              </Alert>
+            </div>
+
+            <div className="space-y-3">
+              <Button onClick={handleRetry} className="w-full">
+                Coba Lagi
+              </Button>
+              <p className="text-sm text-gray-500">
+                Jika masalah berlanjut, silakan hubungi administrator
+              </p>
+            </div>
+          </Card>
+        </div>
+      </>
+    )
+  }
+
+  return (
+    <>
+      {/* Google tag (gtag.js) */}
+      <Script
+        src="https://www.googletagmanager.com/gtag/js?id=AW-997723858"
+        strategy="afterInteractive"
+      />
+      <Script id="gtag-init" strategy="afterInteractive">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'AW-997723858');
+        `}
+      </Script>
+
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
         <Card className="w-full max-w-md p-8 text-center">
           <div className="mb-6">
-            <div className="w-16 h-16 mx-auto mb-4 bg-red-100 rounded-full flex items-center justify-center">
+            <div className="w-16 h-16 mx-auto mb-4 bg-blue-100 rounded-full flex items-center justify-center animate-pulse">
               <svg
-                className="w-8 h-8 text-red-600"
+                className="w-8 h-8 text-blue-600 animate-spin"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -275,73 +347,34 @@ export default function RedirectorPage() {
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   strokeWidth={2}
-                  d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"
+                  d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
                 />
               </svg>
             </div>
             <h1 className="text-2xl font-bold text-gray-900 mb-2">
-              Oops! Terjadi Kesalahan
+              Mengalihkan...
             </h1>
-            <Alert className="mb-4">
-              <AlertDescription>{error}</AlertDescription>
-            </Alert>
+            <p className="text-gray-600 mb-4">Sedang memproses permintaan Anda</p>
           </div>
 
-          <div className="space-y-3">
-            <Button onClick={handleRetry} className="w-full">
-              Coba Lagi
-            </Button>
+          <div className="space-y-4">
+            <Progress value={progress} className="w-full" />
             <p className="text-sm text-gray-500">
-              Jika masalah berlanjut, silakan hubungi administrator
+              {progress < 20 && "Memulai..."}
+              {progress >= 20 && progress < 50 && "Mengumpulkan informasi..."}
+              {progress >= 50 && progress < 80 && "Mengambil data URL..."}
+              {progress >= 80 && progress < 100 && "Mengirim data tracking..."}
+              {progress >= 100 && "Mengalihkan ke tujuan..."}
             </p>
+
+            {shortCode && (
+              <div className="text-xs text-gray-400 font-mono bg-gray-50 p-2 rounded">
+                Code: {shortCode}
+              </div>
+            )}
           </div>
         </Card>
       </div>
-    )
-  }
-
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
-      <Card className="w-full max-w-md p-8 text-center">
-        <div className="mb-6">
-          <div className="w-16 h-16 mx-auto mb-4 bg-blue-100 rounded-full flex items-center justify-center animate-pulse">
-            <svg
-              className="w-8 h-8 text-blue-600 animate-spin"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
-              />
-            </svg>
-          </div>
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">
-            Mengalihkan...
-          </h1>
-          <p className="text-gray-600 mb-4">Sedang memproses permintaan Anda</p>
-        </div>
-
-        <div className="space-y-4">
-          <Progress value={progress} className="w-full" />
-          <p className="text-sm text-gray-500">
-            {progress < 20 && "Memulai..."}
-            {progress >= 20 && progress < 50 && "Mengumpulkan informasi..."}
-            {progress >= 50 && progress < 80 && "Mengambil data URL..."}
-            {progress >= 80 && progress < 100 && "Mengirim data tracking..."}
-            {progress >= 100 && "Mengalihkan ke tujuan..."}
-          </p>
-
-          {shortCode && (
-            <div className="text-xs text-gray-400 font-mono bg-gray-50 p-2 rounded">
-              Code: {shortCode}
-            </div>
-          )}
-        </div>
-      </Card>
-    </div>
+    </>
   )
 }
