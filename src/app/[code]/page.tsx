@@ -72,33 +72,6 @@ export default function RedirectorPage() {
     return browser
   }
 
-  // Get IP address and location
-  const getIPAndLocation = async () => {
-    try {
-      const response = await fetch("https://ipapi.co/json/")
-      const data = await response.json()
-
-      return {
-        ip_address: data.ip,
-        location: {
-          country: data.country_name,
-          country_code: data.country_code,
-          region: data.region,
-          city: data.city,
-          latitude: data.latitude,
-          longitude: data.longitude,
-          timezone: data.timezone,
-        },
-      }
-    } catch (error) {
-      console.log("Failed to get IP and location:", error)
-      return {
-        ip_address: undefined,
-        location: undefined,
-      }
-    }
-  }
-
   // Collect user information
   const collectUserInfo = async (): Promise<UserInfo> => {
     const info: UserInfo = {
@@ -113,34 +86,8 @@ export default function RedirectorPage() {
       timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
     }
 
-    // Get IP address and location
-    try {
-      const ipLocationData = await getIPAndLocation()
-      info.ip_address = ipLocationData.ip_address
-      info.location = ipLocationData.location
-    } catch (error) {
-      console.log("Failed to get IP and location data")
-    }
-
-    // Try to get browser location if permission is granted
-    try {
-      const position = await new Promise<GeolocationPosition>(
-        (resolve, reject) => {
-          navigator.geolocation.getCurrentPosition(resolve, reject, {
-            timeout: 5000,
-            enableHighAccuracy: false,
-          })
-        }
-      )
-
-      info.browser_location = {
-        latitude: position.coords.latitude,
-        longitude: position.coords.longitude,
-        accuracy: position.coords.accuracy,
-      }
-    } catch (error) {
-      console.log("Geolocation not available or denied")
-    }
+    // Location tracking disabled
+    // IP address and geolocation features have been disabled
 
     return info
   }
