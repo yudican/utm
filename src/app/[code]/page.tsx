@@ -301,7 +301,9 @@ export default function RedirectorPage() {
             <h1 className="text-2xl font-bold text-gray-900 mb-2">
               Mengalihkan...
             </h1>
-            <p className="text-gray-600 mb-4">Sedang memproses permintaan Anda</p>
+            <p className="text-gray-600 mb-4">
+              Sedang memproses permintaan Kamu
+            </p>
           </div>
 
           <div className="space-y-4">
@@ -310,7 +312,9 @@ export default function RedirectorPage() {
               {progress < 20 && "Memulai..."}
               {progress >= 20 && progress < 50 && "Mengumpulkan informasi..."}
               {progress >= 50 && progress < 80 && "Mengambil data URL..."}
-              {progress >= 80 && progress < 100 && "Mengirim data tracking..."}
+              {progress >= 80 &&
+                progress < 100 &&
+                "Mengyiapkan kupon diskon..."}
               {progress >= 100 && "Mengalihkan ke tujuan..."}
             </p>
 
