@@ -309,13 +309,9 @@ export default function RedirectorPage() {
           <div className="space-y-4">
             <Progress value={progress} className="w-full" />
             <p className="text-sm text-gray-500">
-              {progress < 20 && "Memulai..."}
-              {progress >= 20 && progress < 50 && "Mengumpulkan informasi..."}
-              {progress >= 50 && progress < 80 && "Mengambil data URL..."}
-              {progress >= 80 &&
-                progress < 100 &&
-                "Mengyiapkan kupon diskon..."}
-              {progress >= 100 && "Mengalihkan ke tujuan..."}
+              {progress < 50 && "Sedang menyiapkan permintaanmu.."}
+              {progress >= 50 && progress < 80 && "Diskon spesialmu hampir jadi, tunggu sebentar lagi.."}
+              {progress >= 80 && "Prosesnya hampir beres! Kamu akan segera menuju halaman tujuan.."}
             </p>
 
             {shortCode && (
